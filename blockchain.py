@@ -136,10 +136,10 @@ def mine():
     last_proof = last_block["proof"]
     proof = blockchain.proof_of_work(last_proof)
 
-    # 必须在区块中记录一笔奖励交易
-    blockchain.new_transaction(
-        qr_id="0", scanner="system", timestamp=time(), latitude=0.0, longitude=0.0
-    )
+    # # 必须在区块中记录一笔奖励交易
+    # blockchain.new_transaction(
+    #     qr_id="0", scanner="system", timestamp=time(), latitude=0.0, longitude=0.0
+    # )
 
     # 创建新块并将其添加到区块链中
     block = blockchain.new_block(proof)
