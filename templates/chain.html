@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blockchain Records</title>
+</head>
+<body>
+    <h1>Blockchain Records</h1>
+    <ul>
+        {% for block in chain %}
+        <li>
+            <h3>Block {{ block.index }}</h3>
+            <p><strong>Timestamp:</strong> {{ block.timestamp }}</p>
+            <p><strong>Transactions:</strong></p>
+            <ul>
+                {% for transaction in block.transactions %}
+                <li>
+                    {{ transaction }}
+                </li>
+                {% endfor %}
+            </ul>
+            <p><strong>Proof:</strong> {{ block.proof }}</p>
+            <p><strong>Previous Hash:</strong> {{ block.previous_hash }}</p>
+        </li>
+        <hr>
+        {% endfor %}
+    </ul>
+</body>
+</html>

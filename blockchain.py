@@ -1,8 +1,9 @@
+from flask import Flask, jsonify, request, render_template
 import hashlib
 import json
 from time import time
-from flask import Flask, jsonify, request
 import os
+from datetime import datetime
 
 
 class Blockchain:
@@ -12,7 +13,7 @@ class Blockchain:
         self.load_data()  # 加载数据
 
     def load_data(self):
-        """从文件加载区块链数据，如果文件为空或损坏，创建创世区块"""
+        """从文件加载区块链数据"""
         if os.path.exists("blockchain_data.json"):
             try:
                 with open("blockchain_data.json", "r") as file:
@@ -93,6 +94,22 @@ def full_chain():
         "length": len(blockchain.chain),
     }
     return jsonify(response), 200
+
+
+# 创建一个路由来显示区块链的网页信息
+@app.route("/chain/web", methods=["GET"])
+def chain_web():
+    # 将时间戳转换为可读格式
+    formatted_chain = []
+    for block in blockchain.chain:
+        formatted_block = block.copy()
+        formatted_block["timestamp"] = datetime.fromtimestamp(
+            block["timestamp"]
+        ).strftime("%Y-%m-%d %H:%M:%S")
+        formatted_chain.append(formatted_block)
+
+    # 使用模板显示区块链信息
+    return render_template("chain.html", chain=formatted_chain)
 
 
 # 创建一个路由来添加二维码识别记录
